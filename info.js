@@ -13,20 +13,27 @@ async function fetchProducts() {
       const data = await response.json();
 
       const row1 = document.querySelector(".row");
-      row1.innerHTML = data.map(
-        (product) => `
+      row1.innerHTML = data
+        .map(
+          (product) => `
         <div class="col-md-3">
-        <div class="card">
+        <div class="card shadow-sm p-3 mb-5 bg-white rounded">
            <img src="${product.imageUrl}" class="card-img-top" alt="...">
-           <div class="card-body">
-             <h5 class="card-title">Card title</h5>
-             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-             <a href="#" class="btn btn-primary">Go somewhere</a>
+           <div class="card-body ">
+             <h5 class="card-title">${product.name}</h5>
+             <p class="card-text">${product.description}</p>
+             <p>${product.brand}</p>
+             <a href="#" class="btn btn-dark">${product.price} £</a>
+             <a href="./detailspage.html?productId=${product._id}" class="btn btn-danger">More...</a>
            </div>
        </div>
        </div>`
-      );
+        )
+        .join("");
     }
   }
 }
 fetchProducts();
+function deleteProduct(event) {
+  event.target.closest(".col-md-3").remove();
+}
